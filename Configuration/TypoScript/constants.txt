@@ -7,4 +7,6 @@ config.tx_piwik {
   trackBackendUsers = 0
   # cat=plugin.tx_piwik; type=boolean; label= Use asynchronous API: If TRUE the asynchronous JavaScript API of Piwik will be used
   useAsyncTrackingApi = 0
+  # cat=plugin.tx_piwik; type=boolean; label= Disable Cookies: Disable cookie usage of Matomo, see: https://matomo.org/faq/general/faq_157/
+  disableCookies = 0
 }
