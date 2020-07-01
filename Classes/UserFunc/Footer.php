@@ -137,6 +137,7 @@ class Footer {
 		$trackingCode .= $this->getPiwikCustomDimensions();
 		$trackingCode .= $this->getPiwiksetUserId();
 		$trackingCode .= $this->getAdditionalTrackers();
+		$trackingCode .= $this->getDisableCookies();
 
 		if (!$this->useAsyncTrackingApi) {
 			$trackingCode .= "\t\t" . 'piwikTracker.trackPageView();';
@@ -236,6 +237,26 @@ class Footer {
 		$pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
 		return $pageRenderer->getTitle();
 	}
+
+    /**
+     * Generates piwikTracker.disableCookies(); when cookies are disabled in the config.
+     *
+     * @return string
+     */
+    protected function getDisableCookies()
+    {
+        if (empty($this->piwikOptions['disableCookies'])) {
+            return '';
+        }
+
+        $this->matomoTracker->disableCookieSupport();
+
+        if ($this->useAsyncTrackingApi) {
+            return '_paq.push(["disableCookies"]);' . PHP_EOL;
+        }
+
+        return 'piwikTracker.disableCookies();' . PHP_EOL;
+    }
 
 	/**
 	 * Generates piwikTracker.trackGoal javascript code

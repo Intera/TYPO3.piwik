@@ -10,6 +10,8 @@ config.tx_piwik {
 
   // If TRUE the asynchronous JavaScript API will be used
   useAsyncTrackingApi = {$config.tx_piwik.useAsyncTrackingApi}
+
+  disableCookies = {$config.tx_piwik.disableCookies}
 }
 
 page.footerData {
