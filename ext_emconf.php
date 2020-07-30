@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'www.kay-strobach.de',
     'version' => '4.0.0-dev',
     'constraints' => [
-        'depends' => ['typo3' => '9.0.0-9.99.99'],
+        'depends' => ['typo3' => '7.6.0-7.99.99'],
         'conflicts' => [],
         'suggests' => [],
     ],

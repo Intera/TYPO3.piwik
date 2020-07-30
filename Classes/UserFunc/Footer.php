@@ -29,7 +29,6 @@ namespace KayStrobach\Piwik\UserFunc;
  ***************************************************************/
 
 use KayStrobach\Piwik\PiwikApi\MatomoTracker;
-use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Service\MarkerBasedTemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -88,9 +87,7 @@ class Footer {
 		// process the page with these options
 		$conf = $GLOBALS['TSFE']->tmpl->setup['config.']['tx_piwik.'];
 		\TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($conf, $localConfig);
-
-		$context = GeneralUtility::makeInstance(Context::class);
-		$backendUserIsLoggedIn = $context->getPropertyFromAspect('backend.user', 'isLoggedIn', false);
+		$beUserLogin = $GLOBALS['TSFE']->beUserLogin;
 
 		if ($conf['useAsyncTrackingApi']) {
 			$this->useAsyncTrackingApi = TRUE;
@@ -106,7 +103,7 @@ class Footer {
 			} else {
 				return '';
 			}
-		} elseif ($backendUserIsLoggedIn && !intval($conf['trackBackendUsers'])) {
+		} elseif (($beUserLogin == 1) && (!intval($conf['trackBackendUsers']))) {
 			$template = \TYPO3\CMS\Core\Utility\GeneralUtility::getUrl(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('piwik') . 'Resources/Private/Templates/Piwik/notracker_beuser.html');
 		} else {
 			//fetch the js template file, makes editing easier ;)
